@@ -8,9 +8,10 @@ const Order = (props) => {
   const orderCtx = useContext(OrderContext);
 
   const totalQuantity = `$${orderCtx.totalQuantity.toFixed(2)}`;
-  const totalVat = orderCtx.vat
-  const priceWithVAT = orderCtx.priceWithVAT
-  const newvat = orderCtx.newvat
+  const totalVat = orderCtx.vat;
+  const priceWithVAT = orderCtx.priceWithVAT;
+  const newvat = orderCtx.newvat;
+  const vatper50 = orderCtx.vatper50;
   const hasItems = orderCtx.items.length > 0;
 
   const cartItemRemoveHandler = (id) => {};
@@ -18,30 +19,38 @@ const Order = (props) => {
 
   const orderItems = (
     <ul className={classes[`cart-items`]}>
-      {orderCtx.items.map((item) => <CartItem
+      {orderCtx.items.map((item) => (
+        <CartItem
           key={item.id}
           name={item.name}
           amount={item.amount}
           price={item.price}
           onRemove={cartItemRemoveHandler.bind(null, item.id)}
           onAdd={cartItemAddHandler.bind(null, item)}
-        />)}
+        />
+      ))}
     </ul>
-    
   );
-  console.log(totalVat,'vat')
-  console.log(newvat,'newvat' )
- 
+  console.log(totalVat, "vat");
+  console.log(newvat, "newvat");
+
   return (
     <Modal>
       {orderItems}
       <div className={classes.total}>
-        <span>Total Amount</span>
+        <span>Sub Total</span>
         <span>{totalQuantity}</span>
       </div>
-      <div>{`VAT: ${totalVat}`}</div>
-      <div>{`newvat: ${newvat}`}</div>
-      <div>{`PRICE WITH VAT: ${priceWithVAT}`}</div>
+      {/* <div>{`VAT: ${totalVat}`}</div> */}
+
+      <div className={classes.total}>
+        <span>Vat</span>
+        <span>{newvat}</span>
+      </div>
+      <div className={classes.total}>
+        <span>TOTAL</span>
+        <span>{`$${priceWithVAT}`}</span>
+      </div>
       <div className={classes.actions}>
         <button className={classes[`button--alt`]} onClick={props.onClose}>
           Close
@@ -49,8 +58,6 @@ const Order = (props) => {
         {hasItems && <button className={classes.button}>Order</button>}
       </div>
     </Modal>
-   
-    
   );
 };
 

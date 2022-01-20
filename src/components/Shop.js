@@ -1,8 +1,8 @@
-import React from 'react'
-import ShopItems from './ShopItems'
+import React from "react";
+import ShopItems from "./ShopItems";
 
 const Shop = () => {
-    return <ShopItems />
-}
+  return <ShopItems />;
+};
 
-export default Shop
+export default Shop;

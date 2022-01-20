@@ -53,7 +53,7 @@ const products = [
     id: "6",
     desription: "Fish Meat",
     quantinty: "",
-    price: 8.30,
+    price: 8.3,
     discount: 0,
     vat: 0.18,
     total: "",
@@ -75,7 +75,7 @@ const products = [
     discount: 0,
     vat: 0.22,
     total: "",
-  }
+  },
 ];
 
 const ShopItems = () => {
@@ -87,7 +87,6 @@ const ShopItems = () => {
       price={product.price}
       discount={product.discount}
       vat={product.vat}
-
     />
   ));
 
