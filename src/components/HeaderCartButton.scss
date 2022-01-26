@@ -11,12 +11,12 @@
   border-radius: 25px;
   font-weight: bold;
   margin-right: 200px;
+  &:hover, &:active {
+    background-color: #08004e;
+  }
 }
 
-.button:hover,
-.button:active {
-  background-color: #08004e;
-}
+
 
 .icon {
   width: 1.35rem;
@@ -31,12 +31,11 @@
   margin-left: 1rem;
   font-weight: bold;
 }
-
-.button:hover .badge,
-.button:active .badge {
-  background-color: #08004e;
+.button {
+  &:hover .badge, &:active .badge {
+    background-color: #08004e;
+  }
 }
-
 .bump {
   animation: bump 300ms ease-out;
 }

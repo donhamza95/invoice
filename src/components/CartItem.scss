@@ -6,11 +6,15 @@
   padding: 1rem 0;
   margin: 1rem 0;
 }
-
-.cart-item h2 {
+ h2{
   margin: 0 0 0.5rem 0;
-  color: #363636;
-}
+    color: #363636;
+ }
+
+// .cart-item h2 {
+//   margin: 0 0 0.5rem 0;
+//   color: #363636;
+// }
 
 .summary {
   width: 10rem;
@@ -56,10 +60,13 @@
   cursor: pointer;
   margin-left: 1rem;
   margin: 0.25rem;
+  
+  &:hover, &:active {
+    background-color: #8a2b06;
+    color: white;
+  }
 }
 
-.cart-item button:hover,
-.cart-item button:active {
-  background-color: #8a2b06;
-  color: white;
-}
+
+  
+
