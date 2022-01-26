@@ -27,7 +27,7 @@ const products = [
     desription: "Coca Cola",
     quantinty: "",
     price: 0.5,
-    discount: 0.1,
+    discount: 0.10,
     vat: 0.18,
     total: "",
   },

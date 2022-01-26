@@ -9,7 +9,7 @@ const Invoice = (props) => {
   const totalQuantity = orderCtx.totalQuantity;
   const pricePerItem = orderCtx.pricePerItem;
   const totalPerItem = orderCtx.totalPerItem;
-  const totalVat = `${orderCtx.vat.toFixed(2)}`;
+  const totalVat = `${orderCtx.vat.toFixed(3)}`;
   const priceWithVAT = orderCtx.priceWithVAT;
   const newvat = orderCtx.newvat;
   const vatper50 = orderCtx.vatper50;
@@ -27,9 +27,9 @@ const Invoice = (props) => {
         discount: item.discount,
         quantity: item.quantity,
         subtotal: totalQuantity,
-        vat: `${item.vat * 100}%`,
+        vat: `${item.vat.toFixed(3) * 100}%`,
         total:
-          pricePerItem + `+` + totalVat + `=` + `${priceWithVAT.toFixed(3)}`,
+          pricePerItem + `+` + totalVat + `=` + `${totalPerItem.toFixed(3)}`,
         difference: 500 - priceWithVAT,
       };
 
@@ -41,9 +41,9 @@ const Invoice = (props) => {
         price: item.price,
         discount: item.discount,
         quantity: item.quantity,
-        vat: `${item.vat * 100}%`,
+        vat: `${item.vat.toFixed(3) * 100}%`,
         total:
-          pricePerItem + `+` + totalVat + `=` + `${priceWithVAT.toFixed(3)}`,
+          pricePerItem + `+` + totalVat + `=` + `${totalPerItem.toFixed(3)}`,
       };
 
       const newObj = {
@@ -132,7 +132,7 @@ const Invoice = (props) => {
           <div className="outer">
             <div className="undertable">
               <p className="subtotal">Subtotal</p>
-              <p>{`$${totalQuantity}`}</p>
+              <p>{`$${totalQuantity.toFixed(2)}`}</p>
             </div>
             <div className="undertable">
               <p className="subtotal">VAT</p>
@@ -147,7 +147,7 @@ const Invoice = (props) => {
       ) : (
         <div>
           <MaterialTable
-            title="Invoice 2"
+            title="Invoice 1"
             columns={colums}
             data={rows}
             options={{
@@ -158,24 +158,21 @@ const Invoice = (props) => {
           <div className="outer">
             <div className="undertable">
               <p className="subtotal">Subtotal</p>
-              {/* {priceWithVAT < 500 ? (
-                <p>{`$${totalQuantity}`}</p>
-              ) : (
-                <p>{`$${totalQuantity - subtotalInvoice}`}</p>
-              )} */}
+              <p>{`$${totalQuantity.toFixed(2)}`}</p>
             </div>
             <div className="undertable">
               <p className="subtotal">VAT</p>
-              {priceWithVAT < 500 ? <p>{newvat}</p> : <p>{newvat}</p>}
+              {priceWithVAT < 500 ? <p>{newvat.toFixed(3)}</p> : <p>{newvat.toFixed(3)}</p>}
             </div>
             <div className="undertable">
               <p className="subtotal">TOTAL</p>
               <p>
-                {priceWithVAT < 500 ? (
+                {priceWithVAT /* {priceWithVAT < 500 ? (
                   <p>{totalInvoice}</p>
                 ) : (
                   <p>{totalInvoice}</p>
-                )}
+                )} */}
+               
               </p>
             </div>
           </div>
@@ -191,15 +188,15 @@ const Invoice = (props) => {
           <div className="outer">
             <div className="undertable">
               <p className="subtotal">Subtotal</p>
-              <p>{`$${priceWithVAT}`}</p>
+              <p>{`$${totalQuantity}`}</p>
             </div>
             <div className="undertable">
               <p className="subtotal">VAT</p>
-              <p>{priceWithVAT}</p>
+              <p>{newvat.toFixed(3)}</p>
             </div>
             <div className="undertable">
               <p className="subtotal">TOTAL</p>
-              <p>{`$${totalnextInvoice?.toFixed(3)}`}</p>
+              <p>{`$${priceWithVAT?.toFixed(3)}`}</p>
             </div>
           </div>
         </div>
