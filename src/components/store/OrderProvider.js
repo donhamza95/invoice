@@ -21,12 +21,8 @@ const orderReducer = (state, action) => {
 
     updatedItem = { ...action.item };
     updatedItems = state.items.concat(updatedItem);
-
-    console.log(updatedItem, "uI");
-
-    // const updatedItems = state.items.concat(action.item)
+    
     const updatedPrice = action.item.price - action.item.discount;
-    // const updatedTotalQuantity = state.totalQuantity + action.item.price * action.item.quantity
     const updatedPricePerItem = updatedPrice * action.item.quantity;
     const updatedTotalQuantity =
       state.totalQuantity + updatedPrice * action.item.quantity;
@@ -37,8 +33,6 @@ const orderReducer = (state, action) => {
     const allVat = state.newvat + updatedVat;
     const updatedTotalQuantityVAT = allVat + updatedTotalQuantity;
 
-    console.log(updatedVat, "udpatedVAT");
-    console.log(vatper50, "vatper50");
     return {
       totalPerItem: totalPerItem,
       pricePerItem: updatedPricePerItem,

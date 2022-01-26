@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef } from "react";
-import classes from "./ShopItemForm.module.css";
+import './ShopItemForm.scss'
 import Input from "./Input";
 
 const ShopItemForm = (props) => {
@@ -17,7 +17,7 @@ const ShopItemForm = (props) => {
     props.onAddToOrder(enteredQuantityNumber);
   };
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
+    <form className='form' onSubmit={submitHandler}>
       <Input
         ref={quantityInputRef}
         label="Quantity"

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import React from "react";
 
 import OrderContext from "./store/order-context";
-import classes from "./HeaderCartButton.module.css";
+import './HeaderCartButton.scss'
 const HeaderCartButton = (props) => {
   const orderCtx = useContext(OrderContext);
 
@@ -10,9 +10,9 @@ const HeaderCartButton = (props) => {
     return currentOrder + item.quantity;
   }, 0);
   return (
-    <button className={classes.button} onClick={props.onClick}>
+    <button className='button' onClick={props.onClick}>
       <span>Your Cart</span>
-      <span className={classes.badge}>{numberOfItemsOrdered}</span>
+      <span className='badge'>{numberOfItemsOrdered}</span>
     </button>
   );
 };

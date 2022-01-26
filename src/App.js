@@ -18,7 +18,6 @@ function App() {
     <OrderProvider>
       {orderShown && <Order onClose={hideorderHanlder} />}
       <Header onshowOrder={showorderHandler} />
-
       <main>
         <ShopItems></ShopItems>
       </main>

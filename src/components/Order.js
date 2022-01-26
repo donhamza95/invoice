@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import classes from "./Order.module.css";
+import './Order.scss'
 import Modal from "./Modal";
 import OrderContext from "./store/order-context";
 import CartItem from "./CartItem";
@@ -18,7 +18,7 @@ const Order = (props) => {
   const cartItemAddHandler = (item) => {};
 
   const orderItems = (
-    <ul className={classes[`cart-items`]}>
+    <ul className='cart-items'>
       {orderCtx.items.map((item) => (
         <CartItem
           key={item.id}
@@ -31,31 +31,29 @@ const Order = (props) => {
       ))}
     </ul>
   );
-  console.log(totalVat, "vat");
-  console.log(newvat, "newvat");
 
   return (
     <Modal>
       {orderItems}
-      <div className={classes.total}>
+      <div className='total'>
         <span>Sub Total</span>
         <span>{totalQuantity}</span>
       </div>
       {/* <div>{`VAT: ${totalVat}`}</div> */}
 
-      <div className={classes.total}>
+      <div className='total'>
         <span>Vat</span>
         <span>{newvat}</span>
       </div>
-      <div className={classes.total}>
+      <div className='total'>
         <span>TOTAL</span>
         <span>{`$${priceWithVAT}`}</span>
       </div>
-      <div className={classes.actions}>
-        <button className={classes[`button--alt`]} onClick={props.onClose}>
+      <div className='actions'>
+        <button className='button--alt' onClick={props.onClose}>
           Close
         </button>
-        {hasItems && <button className={classes.button}>Order</button>}
+        {hasItems && <button className='button'>Order</button>}
       </div>
     </Modal>
   );

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CartItem from "./CartItem";
 import { useContext } from "react";
 import OrderContext from "./store/order-context";
 import MaterialTable from "material-table";
-import "./Invoice.css";
-import { ImportExport } from "@material-ui/icons";
+import "./Invoice.scss";
 
 const Invoice = (props) => {
   const orderCtx = useContext(OrderContext);
-  const totalQuantity = `$${orderCtx.totalQuantity.toFixed(2)}`;
+  const totalQuantity = orderCtx.totalQuantity;
   const pricePerItem = orderCtx.pricePerItem;
   const totalPerItem = orderCtx.totalPerItem;
   const totalVat = `${orderCtx.vat.toFixed(2)}`;
@@ -17,95 +15,96 @@ const Invoice = (props) => {
   const vatper50 = orderCtx.vatper50;
   const hasItems = orderCtx.items.length > 0;
 
-  const isValid = priceWithVAT < 2;
-
-  const orderItems = (
-    <ul>
-      {orderCtx.items.map((item) => (
-        <CartItem
-          key={item.id}
-          name={item.name}
-          amount={item.amount}
-          price={item.price}
-          pricePerItem={item.pricePerItem}
-          //   onRemove={cartItemRemoveHandler.bind(null, item.id)}
-          //   onAdd={cartItemAddHandler.bind(null, item)}
-        />
-      ))}
-    </ul>
-  );
-
-  console.log(orderItems, "price");
-
   const [rows, setRows] = useState([]);
   const [newRows, setnewRows] = useState([]);
 
   useEffect(() => {
     orderCtx?.items?.map((item) => {
       const obj = {
+        vatnumber: newvat,
         name: item.name,
         price: item.price,
         discount: item.discount,
         quantity: item.quantity,
-
+        subtotal: totalQuantity,
         vat: `${item.vat * 100}%`,
-        // total: totalQuantity + `+` + totalVat + `=` + priceWithVAT
-
         total:
-          pricePerItem + `+` + totalVat + `=` + `${totalPerItem.toFixed(3)}`,
-        totalprice: priceWithVAT,
+          pricePerItem + `+` + totalVat + `=` + `${priceWithVAT.toFixed(3)}`,
         difference: 500 - priceWithVAT,
       };
-      console.log(obj.difference, "difference");
-      console.log(obj.quantity, "qqqquantitty");
-      // if(obj.total > 500){
-      //   const newObj = {
-      //     total2: obj.total
-      //   }
-      //   setnewRows([...newRows, newObj])
-      // }
-      // else{setRows([...rows,obj])}
-      if (obj.quantity < 50) {
+
+      const invoiceObj = {
+        vatnumber: newvat,
+        totalprice: item.price,
+        subtotal: totalQuantity,
+        name: item.name,
+        price: item.price,
+        discount: item.discount,
+        quantity: item.quantity,
+        vat: `${item.vat * 100}%`,
+        total:
+          pricePerItem + `+` + totalVat + `=` + `${priceWithVAT.toFixed(3)}`,
+      };
+
+      const newObj = {
+        totalprice: obj.totalprice - invoiceObj.totalprice,
+        vatnumber: newvat,
+        subtotal: totalQuantity,
+        name: item.name,
+        price: item.price,
+        discount: item.discount,
+        vat: `${item.vat * 100}%`,
+        quantity2: obj.quantity - invoiceObj.quantity,
+        total2:
+          (obj.quantity - invoiceObj.quantity) * item.price -
+          item.discount +
+          item.vat,
+      };
+      if (priceWithVAT < 500) {
         console.log("hini if 1");
-        if (obj.totalprice < 500) {
+
+        setRows([...rows, obj]);
+        if (obj.quantity < 51) {
           console.log("hini if 2");
           setRows([...rows, obj]);
+        } else {
+          console.log("hini n if me lloq");
+          setRows([...rows, invoiceObj]);
+          setnewRows([...newRows, newObj]);
         }
       } else {
-        const invoiceObj = {
-          name: item.name,
-          price: item.price,
-          discount: item.discount,
-          quantity: 50,
-          vat: `${item.vat * 100}%`,
-          total: item.price * 50 + vatper50,
-
-          //total: item.price * 50 + `+` + vatper50 + `=` + totali
-        };
-        const newObj = {
-          name: item.name,
-          price: item.price,
-          discount: item.discount,
-          vat: `${item.vat * 100}%`,
-          quantity2: obj.quantity - invoiceObj.quantity,
-          total2:
-            (obj.quantity - invoiceObj.quantity) * item.price -
-            item.discount +
-            item.vat,
-        };
+        console.log("hini n lloqin e madh");
         setRows([...rows, invoiceObj]);
         setnewRows([...newRows, newObj]);
       }
-      // if(obj.quantity > 50 || obj.totalprice > 500 ){
-      //   const newObj ={
-      //       totalprice2: obj.totalprice - 500,
-      //       quantity2: obj.quantity - 50,
-      //   }
-
-      // }
-      // else{setRows([...rows,obj])}
     });
   }, [orderCtx]);
+
+  const [totalInvoice, setTotal] = useState(0);
+  const [vatInvoice, setvatInvoice] = useState(0);
+  const [subtotalInvoice, setsubtotalInvoice] = useState(0);
+
+  const [totalnextInvoice, setnextTotal] = useState(0);
+  const [vatnextInvoice, setvatnextInvoice] = useState(0);
+  const [subtotalnextInvoice, setsubtotalnextInvoice] = useState(0);
+
+  console.log(totalInvoice, "totali pare");
+  console.log(totalnextInvoice, "totali dyte");
+
+  useEffect(() => {
+    console.log(rows, "rooooooooooows");
+    console.log(newRows, "newwwwwwrooooows");
+    if (rows.length > 0) {
+      setTotal(rows[rows?.length - 1].totalprice);
+      setvatInvoice(rows[rows?.length - 1].vatnumber);
+      setsubtotalInvoice(rows[rows?.length - 1].subtotal);
+    }
+    if (newRows.length > 0) {
+      setnextTotal(newRows[newRows?.length - 1].totalprice);
+      setvatnextInvoice(newRows[newRows?.length - 1].vatnumber);
+      setsubtotalnextInvoice(newRows[newRows?.length - 1].subtotal);
+    }
+  }, [rows, newRows]);
 
   const colums = [
     { title: "Description", field: "name" },
@@ -114,8 +113,6 @@ const Invoice = (props) => {
     { title: "Discount", field: "discount" },
     { title: "VAT", field: "vat" },
     { title: "Total", field: "total" },
-    //test
-    { title: "TotalPrice", field: "totalprice" },
   ];
   const colums2 = [
     { title: "Description", field: "name" },
@@ -124,10 +121,8 @@ const Invoice = (props) => {
     { title: "Discount", field: "discount" },
     { title: "VAT", field: "vat" },
     { title: "Total", field: "total2" },
-    //test
-    { title: "TotalPrice2", field: "totalprice2" },
   ];
-
+  const isValid = priceWithVAT < 500;
   return (
     <div>
       {isValid ? (
@@ -144,7 +139,7 @@ const Invoice = (props) => {
           <div className="outer">
             <div className="undertable">
               <p className="subtotal">Subtotal</p>
-              <p>{totalQuantity}</p>
+              <p>{`$${totalQuantity}`}</p>
             </div>
             <div className="undertable">
               <p className="subtotal">VAT</p>
@@ -152,7 +147,7 @@ const Invoice = (props) => {
             </div>
             <div className="undertable">
               <p className="subtotal">TOTAL</p>
-              <p>{`${priceWithVAT.toFixed(3)}`}</p>
+              <p>{`$${priceWithVAT.toFixed(3)}`}</p>
             </div>
           </div>
         </div>
@@ -170,15 +165,25 @@ const Invoice = (props) => {
           <div className="outer">
             <div className="undertable">
               <p className="subtotal">Subtotal</p>
-              <p>{totalQuantity}</p>
+              {/* {priceWithVAT < 500 ? (
+                <p>{`$${totalQuantity}`}</p>
+              ) : (
+                <p>{`$${totalQuantity - subtotalInvoice}`}</p>
+              )} */}
             </div>
             <div className="undertable">
               <p className="subtotal">VAT</p>
-              <p>{newvat}</p>
+              {priceWithVAT < 500 ? <p>{newvat}</p> : <p>{newvat}</p>}
             </div>
             <div className="undertable">
               <p className="subtotal">TOTAL</p>
-              <p>{priceWithVAT}</p>
+              <p>
+                {priceWithVAT < 500 ? (
+                  <p>{totalInvoice}</p>
+                ) : (
+                  <p>{totalInvoice}</p>
+                )}
+              </p>
             </div>
           </div>
           <MaterialTable
@@ -193,15 +198,15 @@ const Invoice = (props) => {
           <div className="outer">
             <div className="undertable">
               <p className="subtotal">Subtotal</p>
-              <p>{totalQuantity}</p>
+              <p>{`$${priceWithVAT}`}</p>
             </div>
             <div className="undertable">
               <p className="subtotal">VAT</p>
-              <p>{newvat}</p>
+              <p>{priceWithVAT}</p>
             </div>
             <div className="undertable">
               <p className="subtotal">TOTAL</p>
-              <p>{priceWithVAT}</p>
+              <p>{`$${totalnextInvoice?.toFixed(3)}`}</p>
             </div>
           </div>
         </div>

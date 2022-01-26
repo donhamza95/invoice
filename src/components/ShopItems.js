@@ -1,6 +1,6 @@
 import React from "react";
 import ShopItem from "./ShopItem";
-import classes from "./ShopItems.module.css";
+import './ShopItems.scss';
 import Card from "./Card";
 
 const products = [
@@ -53,7 +53,7 @@ const products = [
     id: "6",
     desription: "Fish Meat",
     quantinty: "",
-    price: 8.3,
+    price: 8.30,
     discount: 0,
     vat: 0.18,
     total: "",
@@ -75,7 +75,7 @@ const products = [
     discount: 0,
     vat: 0.22,
     total: "",
-  },
+  }
 ];
 
 const ShopItems = () => {
@@ -87,11 +87,12 @@ const ShopItems = () => {
       price={product.price}
       discount={product.discount}
       vat={product.vat}
+
     />
   ));
 
   return (
-    <section className={classes.meals}>
+    <section className='meals'>
       <Card>
         <ul>{productList}</ul>
       </Card>

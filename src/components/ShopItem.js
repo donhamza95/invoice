@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./ShopItem.module.css";
+import './ShopItem.scss'
 import ShopItemForm from "./ShopItemForm";
 import { useContext } from "react";
 import OrderContext from "./store/order-context";
@@ -16,14 +16,15 @@ const ShopItem = (props) => {
       price: props.price,
       discount: props.discount,
       vat: props.vat,
+      total: props.total
     });
   };
 
   return (
-    <li className={classes.meal}>
+    <li className='meal'>
       <div>
         <h3>{props.description}</h3>
-        <div className={classes.price}>{price}</div>
+        <div className='price'>{price}</div>
         <div>{`Discount: ${props.discount}`}</div>
         <div>{`VAT: ${props.vat}`}</div>
       </div>
