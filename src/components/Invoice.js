@@ -61,19 +61,15 @@ const Invoice = (props) => {
           item.vat,
       };
       if (priceWithVAT < 500) {
-        console.log("hini if 1");
 
         setRows([...rows, obj]);
         if (obj.quantity < 51) {
-          console.log("hini if 2");
           setRows([...rows, obj]);
         } else {
-          console.log("hini n if me lloq");
           setRows([...rows, invoiceObj]);
           setnewRows([...newRows, newObj]);
         }
       } else {
-        console.log("hini n lloqin e madh");
         setRows([...rows, invoiceObj]);
         setnewRows([...newRows, newObj]);
       }
@@ -88,12 +84,9 @@ const Invoice = (props) => {
   const [vatnextInvoice, setvatnextInvoice] = useState(0);
   const [subtotalnextInvoice, setsubtotalnextInvoice] = useState(0);
 
-  console.log(totalInvoice, "totali pare");
-  console.log(totalnextInvoice, "totali dyte");
+  
 
   useEffect(() => {
-    console.log(rows, "rooooooooooows");
-    console.log(newRows, "newwwwwwrooooows");
     if (rows.length > 0) {
       setTotal(rows[rows?.length - 1].totalprice);
       setvatInvoice(rows[rows?.length - 1].vatnumber);
