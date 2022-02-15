@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import ShopItems from "./components/ShopItems";
 import Order from "./components/Order";
 import OrderProvider from "./components/store/OrderProvider";
-import Invoice from "./components/Invoice";
+import InvoiceTest from "./components/InvoiceTest";
 
 function App() {
   const [orderShown, setorderShown] = useState(false);
@@ -19,10 +19,10 @@ function App() {
       {orderShown && <Order onClose={hideorderHanlder} />}
       <Header onshowOrder={showorderHandler} />
       <main>
-        <ShopItems></ShopItems>
+        <ShopItems />
       </main>
       <div>
-        <Invoice></Invoice>
+        <InvoiceTest></InvoiceTest>
       </div>
     </OrderProvider>
   );

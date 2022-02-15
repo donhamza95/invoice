@@ -31,9 +31,10 @@ const Invoice = (props) => {
         total:
           pricePerItem + `+` + totalVat + `=` + `${totalPerItem.toFixed(3)}`,
         difference: 500 - priceWithVAT,
-      };
+        totalprice: totalPerItem
+        };
 
-      const invoiceObj = {
+        const invoiceObj = {
         vatnumber: newvat,
         totalprice: item.price,
         subtotal: totalQuantity,
@@ -46,7 +47,7 @@ const Invoice = (props) => {
           pricePerItem + `+` + totalVat + `=` + `${totalPerItem.toFixed(3)}`,
       };
 
-      const newObj = {
+        const newObj = {
         totalprice: obj.totalprice - invoiceObj.totalprice,
         vatnumber: newvat,
         subtotal: totalQuantity,
@@ -75,6 +76,8 @@ const Invoice = (props) => {
       }
     });
   }, [orderCtx]);
+  console.log(rows,'rowsss');
+  console.log(newRows,'newrowsssss');
 
   const [totalInvoice, setTotal] = useState(0);
   const [vatInvoice, setvatInvoice] = useState(0);
@@ -99,6 +102,8 @@ const Invoice = (props) => {
     }
   }, [rows, newRows]);
 
+  console.log(totalInvoice,'totali pare');
+
   const colums = [
     { title: "Description", field: "name" },
     { title: "QTY", field: "quantity" },
@@ -120,6 +125,15 @@ const Invoice = (props) => {
     <div>
       {isValid ? (
         <div>
+          {rows.obj.map((quantity) => {
+            if(quantity < 50){
+              return <MaterialTable
+              title="Invoice 1"
+              columns={colums}
+              data={rows}
+              ></MaterialTable>
+            }
+          })}
           <MaterialTable
             title="Invoice 1"
             columns={colums}
